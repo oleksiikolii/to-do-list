@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from list_app.forms import TaskForm
-from list_app.models import Task
+from list_app.models import Task, Tag
 
 
 class IndexView(generic.ListView):
@@ -36,3 +36,24 @@ class TaskUpdateStateView(generic.View):
         task.save()
         return redirect(reverse("list:homepage"))
 
+
+class TagListView(generic.ListView):
+    model = Tag
+
+
+class TagCreateView(generic.CreateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("list:tags")
+
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("list:tags")
+
+
+class TagDeleteView(generic.DeleteView):
+    model = Tag
+    template_name = "list_app/tag_confirm_delete.html"
+    success_url = reverse_lazy("list:tags")
