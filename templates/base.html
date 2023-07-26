@@ -4,19 +4,20 @@
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <meta charset="UTF-8">
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<div class="row">
-
-  {% include "includes/sidebar.html" %}
-
-  <div class="col">
-    {% block content %}
-    {% endblock %}
+  <div class="container-fluid">
+    <div class="row">
+      {% include "includes/sidebar.html" %}
+      <div class="col content-col">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
   </div>
-
-</div>
 </body>
 </html>

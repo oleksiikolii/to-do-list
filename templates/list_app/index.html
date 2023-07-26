@@ -1,46 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="row">
+  <div class="row title-row">
     <div class="col">
       <h1>TODO list</h1>
     </div>
     <div class="col">
-      <a class="btn btn-primary"
+      <a class="btn btn-lg btn-primary"
          href="{% url 'list:create-task' %}">
         Add task
       </a>
     </div>
   </div>
+
 {% for task in task_list %}
-  <div class="row">
+  <hr>
+  <div class="row task-row">
     <div class="col">
       <h5>
         <b>
           {{ task.content }}
         </b>
           {% if not task.done %}
-            <span style="color: red;">
-              Not done
-            </span>
+            <small><span style="color: red;">
+              | Not done
+            </span></small>
           {% else %}
             <span style="color: green;">
-              Done
+              | Done
             </span>
           {% endif %}
       </h5>
       <p>
         Created at: {{ task.created_at }}
-        {% if task.deadline %}
-          <span>
+        {% if task.deadline and not task.done %}
+          <span class="text-danger">
             Deadline to: {{ task.deadline }}
           </span>
         {% endif %}
       </p>
-      <p>Tags:
+      <p>
+      {% if task.tags.count != 0 %}
+        Tags:
         {% for tag in task.tags.all %}
-          {{ tag.name }}
+          <span>{{ tag.name }}{% if not forloop.last %}, {% else %} | {% endif %}</span>
         {% endfor %}
+      {% endif %}
       <span>
         <a href="{% url 'list:update-task' pk=task.id %}">Update</a>
         <span> </span>
@@ -51,9 +56,10 @@
     <div class="col">
       {% if not task.done %}
         <a href="{% url 'list:update-state' pk=task.id %}"
-           class="btn btn-success">Complete</a>
+           class="btn btn-success btn-sm">Complete</a>
       {% else %}
-        <a href="{% url 'list:update-state' pk=task.id %}" class="btn btn-secondary">Undo</a>
+        <a href="{% url 'list:update-state' pk=task.id %}"
+           class="btn btn-secondary btn-sm">Undo</a>
       {% endif %}
     </div>
   </div>
