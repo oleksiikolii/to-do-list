@@ -6,6 +6,7 @@ from list_app.views import (
     TaskUpdateStateView,
     TaskDeleteView,
     TaskUpdateView,
+    TagCreateView,
     TagListView,
     TagUpdateView,
     TagDeleteView
@@ -13,7 +14,8 @@ from list_app.views import (
 
 urlpatterns = [
     path("", IndexView.as_view(), name="homepage"),
-    path("tags/", TagListView.as_view(), name="tags"),
+    path("tag/", TagListView.as_view(), name="tags"),
+    path("tag/create/", TagCreateView.as_view(), name="tag-create"),
     path("tags/<int:pk>/update", TagUpdateView.as_view(), name="tag-update"),
     path("tags/<int:pk>/delete", TagDeleteView.as_view(), name="tag-delete"),
     path("task/create/", TaskCreateView.as_view(), name="create-task"),
